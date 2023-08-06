@@ -72,42 +72,92 @@
 
     /* 2) Programa una función que te devuelva el texto recortado según el número de caracteres indicados, pe. miFunción("Hola Mundo", 4) devolverá "Hola" */
 
-    ingresarTexto = prompt("ingrese un texto")
 
-    const validarTexto = (texto = "", recortar) => {
-      while (texto === null || !texto)
-        if (texto === null) {
-          alert("Gracias por su visita")
-          break
+    let textoValido = "";
+    let recortar = ""
+
+    const validarNumero = () => {
+      let numero = prompt("Ingrese un número")
+
+      while (isNaN(numero) || numero > textoValido.length || numero === null || numero.length === 0) {
+        if (numero === null) {
+          alert("Gracias por su visita");
+          return;
         }
-        else {
-          texto = prompt("Por favor ingrese un texto") // no lo toma despues en el global
-        }
-    }
-
-    validarTexto(ingresarTexto)
-
-    recortar = parseInt(prompt("ingrese el numero de letras que desea mostrar"))
-    
-    const validarNumero = (numero) => {
-      while (isNaN(recortar) && recortar > texto.length) {
-        if (isNaN(recortar)) {
-          recortar = parseInt(prompt("ingrese un numero valido"))
-        }
-
-        if (recortar > texto.length) {
-          recortar = parseInt(prompt("Ingrese un número menor"))
+        numero = parseInt(numero)
+        if (isNaN(numero) || numero > textoValido.length) {
+          numero = prompt(`ingrese un numero menor o igual ${textoValido.length}`)
         }
       }
+      recortar = parseInt(numero)
     }
-   
-validarNumero(recortar)
+    const validarTexto = () => {
+      texto = prompt("Ingrese un texto")
+      while (texto === null || texto.length === 0) {
+        if (texto === null) {
+          alert("Gracias por su visita");
+          return;
+        } else {
+          texto = prompt("Por favor ingrese un texto");
 
-    if (ingresarTexto.length > 0)
-      textoRecortado = ingresarTexto.slice(0, recortar)
-    console.log(`Usted ingreso ${ingresarTexto}\n el texto recortardo es: \n ${textoRecortado} `)
+        }
+      }
+      textoValido = texto; // Actualizamos la variable global con el texto válido
+      if (textoValido.length > 0) {
+        validarNumero()
+      }
+    };
 
+    validarTexto();
 
+    
+    if (textoValido.length > 0 && Number.isInteger(recortar)) {
+      let textoRecortado = textoValido.slice(0, recortar)
+      console.log(`Usted ingreso ${textoValido} el texto recortardo es: ${textoRecortado} `)
+    }
+//------------------------solucion GPT----------
+// la diferencia es que como javascrip identifica si es un numero aunque sea un string, gpt resume los parametros a evaluar como verdaderos en la funcion validarNumero
+
+    /*
+    let textoValido = "";
+    let recortar = "";
+    
+    const validarNumero = () => {
+      let numero = prompt("Ingrese un número");
+    
+      while (isNaN(numero) || numero > textoValido.length || numero.length === 0) {
+        if (numero === null) {
+          alert("Gracias por su visita");
+          return;
+        }
+        numero = prompt(`Ingrese un número menor o igual a ${textoValido.length}`);
+      }
+      recortar = parseInt(numero);
+    };
+    
+    const validarTexto = () => {
+      let texto = prompt("Ingrese un texto");
+    
+      while (texto === null || texto.length === 0) {
+        if (texto === null) {
+          alert("Gracias por su visita");
+          return;
+        }
+        texto = prompt("Por favor ingrese un texto");
+      }
+      textoValido = texto;
+      if (textoValido.length > 0) {
+        validarNumero();
+      }
+    };
+    
+    validarTexto();
+    
+    if (textoValido.length > 0 && Number.isInteger(recortar)) {
+      let textoRecortado = textoValido.slice(0, recortar);
+      console.log(`Usted ingresó "${textoValido}". El texto recortado es: "${textoRecortado}"`);
+    }
+    */
     /* 3) Programa una función que dada una String te devuelva un Array de textos separados por cierto caracter, pe.
      miFuncion('hola que tal', ' ') devolverá ['hola', 'que', 'tal'] */
 
